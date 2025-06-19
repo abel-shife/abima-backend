@@ -1,0 +1,78 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl", "debian-openssl-1.1.x", "rhel-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  role      UserRole @default(CASHIER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  phone     String?  @unique
+  sales     Sale[]
+
+  @@map("users")
+}
+
+model Product {
+  id              Int          @id @default(autoincrement())
+  name            String       @unique
+  description     String?
+  imageUrl        String?
+  currentStock    Int          @default(0)
+  minStockLevel   Int?         @default(5)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  averageBuyPrice Decimal?
+  sales           Sale[]
+  batches         StockBatch[]
+
+  @@map("products")
+}
+
+model StockBatch {
+  id         Int      @id @default(autoincrement())
+  productId  Int
+  buyPrice   Decimal
+  quantity   Int
+  receivedAt DateTime @default(now())
+  notes      String?
+  sales      Sale[]
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId], map: "stock_batches_productId_fkey")
+  @@map("stock_batches")
+}
+
+model Sale {
+  id               Int        @id @default(autoincrement())
+  soldQuantity     Int
+  soldById         Int
+  soldStockBatchId Int
+  soldUnitPrice    Decimal
+  soldTotalPrice   Decimal
+  soldAt           DateTime   @default(now())
+  soldProductId    Int
+  soldBy           User       @relation(fields: [soldById], references: [id])
+  Product          Product    @relation(fields: [soldProductId], references: [id], onDelete: Cascade)
+  StockBatch       StockBatch @relation(fields: [soldStockBatchId], references: [id], onDelete: Cascade)
+
+  @@index([soldAt])
+  @@index([soldById], map: "sales_soldById_fkey")
+  @@index([soldProductId], map: "sales_soldProductId_fkey")
+  @@index([soldStockBatchId], map: "sales_soldStockBatchId_fkey")
+  @@map("sales")
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  CASHIER
+}

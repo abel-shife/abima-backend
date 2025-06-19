@@ -1,0 +1,585 @@
+{
+    "info": {
+        "_postman_id": "abima-backend-collection-2025",
+        "name": "Abima Inventory Backend API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": "Postman collection for all modules: user, product, stockbatch, sale, report."
+    },
+    "item": [
+        {
+            "name": "User",
+            "item": [
+                {
+                    "name": "Register User",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"password123\",\n  \"phone\": \"1234567890\",\n  \"role\": \"ADMIN\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:4000/users",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "users"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Login User",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"password123\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:4000/users/login",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "users",
+                                "login"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get All Users",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:4000/users",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "users"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get User By ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:4000/users/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "users",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update User",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"username\": \"admin2\",\n  \"password\": \"newpass\",\n  \"phone\": \"9876543210\",\n  \"role\": \"MANAGER\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:4000/users/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "users",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete User",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "http://localhost:4000/users/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "users",
+                                "1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Product",
+            "item": [
+                {
+                    "name": "Create Product (with image)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart/form-data"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "name",
+                                    "value": "Sample Product",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "description",
+                                    "value": "A test product",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "currentStock",
+                                    "value": "10",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "minStockLevel",
+                                    "value": "2",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "image",
+                                    "type": "file",
+                                    "src": ""
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "http://localhost:4000/products",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "products"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get All Products",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:4000/products",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "products"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Product By ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:4000/products/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "products",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Product",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Updated Product\",\n  \"description\": \"Updated desc\",\n  \"imageUrl\": \"/uploads/sample.jpg\",\n  \"currentStock\": 20,\n  \"minStockLevel\": 5\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:4000/products/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "products",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Product",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "http://localhost:4000/products/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "products",
+                                "1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "StockBatch",
+            "item": [
+                {
+                    "name": "Create StockBatch",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"productId\": 1,\n  \"buyPrice\": 10.5,\n  \"quantity\": 50,\n  \"receivedAt\": \"2025-06-07T12:00:00.000Z\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:4000/stockbatches",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "stockbatches"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get All StockBatches",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:4000/stockbatches",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "stockbatches"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get StockBatch By ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:4000/stockbatches/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "stockbatches",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update StockBatch",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"productId\": 1,\n  \"buyPrice\": 11.0,\n  \"quantity\": 40,\n  \"receivedAt\": \"2025-06-08T12:00:00.000Z\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:4000/stockbatches/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "stockbatches",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete StockBatch",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "http://localhost:4000/stockbatches/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "stockbatches",
+                                "1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Sale",
+            "item": [
+                {
+                    "name": "Create Sale",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"soldproductId\": 1,\n  \"soldQuantity\": 5,\n  \"soldById\": 1,\n  \"soldUnitPrice\": 15.0,\n  \"soldTotalPrice\": 75.0,\n  \"soldAt\": \"2025-06-07T13:00:00.000Z\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:4000/sales",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "sales"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get All Sales",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:4000/sales",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "sales"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Sale By ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:4000/sales/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "sales",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Sale",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"soldproductId\": 1,\n  \"soldQuantity\": 3,\n  \"soldById\": 1,\n  \"soldUnitPrice\": 16.0,\n  \"soldTotalPrice\": 48.0,\n  \"soldAt\": \"2025-06-08T13:00:00.000Z\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:4000/sales/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "sales",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Sale",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "http://localhost:4000/sales/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "sales",
+                                "1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Report",
+            "item": [
+                {
+                    "name": "Sales Report (interval)",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:4000/reports/sales?startDate=2025-06-01&endDate=2025-06-07",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "reports",
+                                "sales"
+                            ],
+                            "query": [
+                                {
+                                    "key": "startDate",
+                                    "value": "2025-06-01"
+                                },
+                                {
+                                    "key": "endDate",
+                                    "value": "2025-06-07"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Low Stock Alert",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:4000/reports/low-stock",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "reports",
+                                "low-stock"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Inventory Valuation",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "http://localhost:4000/reports/inventory-valuation",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "4000",
+                            "path": [
+                                "reports",
+                                "inventory-valuation"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
