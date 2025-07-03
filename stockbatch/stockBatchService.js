@@ -2,7 +2,7 @@
 const prisma = require('../config/prismaClient');
 
 const getAllStockBatches = async () => {
-    return prisma.stockBatch.findMany();
+    return prisma.stockBatch.findMany({ orderBy: { receivedAt: 'desc' } });
 };
 
 const getStockBatchById = async (id) => {

@@ -2,7 +2,7 @@
 const prisma = require('../config/prismaClient');
 
 const getAllUsers = async () => {
-    return prisma.user.findMany();
+    return prisma.user.findMany({ orderBy: { createdAt: 'desc' } });
 };
 
 const getUserById = async (id) => {
@@ -22,7 +22,10 @@ const updateUser = async (id, data) => {
 };
 
 const deleteUser = async (id) => {
-    return prisma.user.delete({ where: { id: parseInt(id) } });
+    return prisma.user.update({
+        where: { id: parseInt(id) },
+        data: { isActive: false }
+    });
 };
 
 module.exports = {

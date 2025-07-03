@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/', (req, res) => {
+app.use('/testserver', (req, res) => {
     res.json('Server is working');
 })
 

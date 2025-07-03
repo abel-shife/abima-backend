@@ -1,8 +1,12 @@
 // Service for product-related database operations
 const prisma = require('../config/prismaClient');
 
+function generateProductNumber() {
+    return Math.floor(1000 + Math.random() * 9000).toString(); // 4-digit string
+}
+
 const getAllProducts = async () => {
-    return prisma.product.findMany();
+    return prisma.product.findMany({ orderBy: { createdAt: 'desc' } });
 };
 
 const getProductById = async (id) => {
@@ -10,7 +14,14 @@ const getProductById = async (id) => {
 };
 
 const createProduct = async (data) => {
-    return prisma.product.create({ data });
+    let productNumber;
+    let exists = true;
+    // Ensure uniqueness
+    while (exists) {
+        productNumber = generateProductNumber();
+        exists = await prisma.product.findUnique({ where: { productNumber } });
+    }
+    return prisma.product.create({ data: { ...data, productNumber } });
 };
 
 const updateProduct = async (id, data) => {

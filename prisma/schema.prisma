@@ -1,6 +1,6 @@
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "linux-musl", "debian-openssl-1.1.x", "rhel-openssl-1.1.x"]
+  provider = "prisma-client-js"
+  // binaryTargets = ["native", "linux-musl", "debian-openssl-1.1.x", "rhel-openssl-1.1.x"]
 }
 
 datasource db {
@@ -16,6 +16,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   phone     String?  @unique
+  isActive  Boolean  @default(true)
   sales     Sale[]
 
   @@map("users")
@@ -23,6 +24,7 @@ model User {
 
 model Product {
   id              Int          @id @default(autoincrement())
+  productNumber   String       @unique
   name            String       @unique
   description     String?
   imageUrl        String?
@@ -41,6 +43,7 @@ model StockBatch {
   id         Int      @id @default(autoincrement())
   productId  Int
   buyPrice   Decimal
+  sellPrice  Decimal
   quantity   Int
   receivedAt DateTime @default(now())
   notes      String?

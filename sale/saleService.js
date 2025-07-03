@@ -8,7 +8,8 @@ const getAllSales = async () => {
             Product: true,
             StockBatch: true,
             soldBy: true
-        }
+        },
+        orderBy: { soldAt: 'desc' }
     });
 };
 
