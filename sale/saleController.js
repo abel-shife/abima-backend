@@ -123,10 +123,24 @@ const deleteSale = async (req, res) => {
     }
 };
 
+const getSalesByCashierId = async (req, res) => {
+    try {
+        const cashierId = req.params.cashierId;
+        if (!cashierId) {
+            return res.status(400).json({ error: 'cashierId param is required' });
+        }
+        const sales = await saleService.getSalesByCashierId(cashierId);
+        res.json(sales);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
 module.exports = {
     getAllSales,
     getSaleById,
     createSale,
     updateSale,
     deleteSale,
+    getSalesByCashierId,
 };

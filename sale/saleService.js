@@ -87,6 +87,18 @@ const deleteSale = async (id) => {
     return prisma.sale.delete({ where: { id: parseInt(id) } });
 };
 
+const getSalesByCashierId = async (cashierId) => {
+    return prisma.sale.findMany({
+        where: { soldById: parseInt(cashierId) },
+        include: {
+            Product: true,
+            StockBatch: true,
+            soldBy: true
+        },
+        orderBy: { soldAt: 'desc' }
+    });
+};
+
 module.exports = {
     getAllSales,
     getSaleById,
@@ -95,4 +107,5 @@ module.exports = {
     decrementBatchQuantity,
     updateSale,
     deleteSale,
+    getSalesByCashierId,
 };
