@@ -6,7 +6,10 @@ function generateProductNumber() {
 }
 
 const getAllProducts = async () => {
-    return prisma.product.findMany({ orderBy: { createdAt: 'desc' } });
+    return prisma.product.findMany({
+        where: { status: { not: "deleted" } },
+        orderBy: { createdAt: 'desc' }
+    });
 };
 
 const getProductById = async (id) => {
@@ -29,7 +32,10 @@ const updateProduct = async (id, data) => {
 };
 
 const deleteProduct = async (id) => {
-    return prisma.product.delete({ where: { id: parseInt(id) } });
+    return prisma.product.update({
+        where: { id: parseInt(id) },
+        data: { status: "deleted" }
+    });
 };
 
 module.exports = {

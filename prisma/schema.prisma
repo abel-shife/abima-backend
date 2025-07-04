@@ -35,6 +35,7 @@ model Product {
   averageBuyPrice Decimal?
   sales           Sale[]
   batches         StockBatch[]
+  status          String       @default("active")
 
   @@map("products")
 }
