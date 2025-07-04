@@ -25,7 +25,7 @@ const createProduct = async (req, res) => {
     try {
         const { name, description, imageUrl, currentStock, minStockLevel, averageBuyPrice, quantity, sellPrice } = req.body;
 
-        const product = await productService.createProduct({ name, description, imageUrl, currentStock, minStockLevel, averageBuyPrice });
+        const product = await productService.createProduct({ name, description, imageUrl, currentStock, minStockLevel, averageBuyPrice, sellPrice });
         // Create initial stock batch if buyPrice and quantity are provided
         if (averageBuyPrice && quantity) {
             await stockBatchService.createStockBatch({
