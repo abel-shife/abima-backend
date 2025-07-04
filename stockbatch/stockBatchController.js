@@ -23,8 +23,8 @@ const getStockBatchById = async (req, res) => {
 
 const createStockBatch = async (req, res) => {
     try {
-        const { productId, buyPrice, quantity } = req.body;
-        const batch = await stockBatchService.createStockBatch({ productId, buyPrice, quantity });
+        const { productId, buyPrice, quantity, sellPrice } = req.body;
+        const batch = await stockBatchService.createStockBatch({ productId, buyPrice, quantity, sellPrice });
         // Increment product currentStock only here
         await prisma.product.update({
             where: { id: productId },
@@ -39,6 +39,16 @@ const createStockBatch = async (req, res) => {
             where: { id: productId },
             data: { averageBuyPrice: avg }
         });
+        // If sellPrice is provided and greater than product's current sellPrice, update product.sellPrice
+        if (sellPrice) {
+            const product = await prisma.product.findUnique({ where: { id: productId } });
+            if (!product.sellPrice || Number(sellPrice) > Number(product.sellPrice)) {
+                await prisma.product.update({
+                    where: { id: productId },
+                    data: { sellPrice: sellPrice }
+                });
+            }
+        }
         res.status(201).json(batch);
     } catch (err) {
         res.status(400).json({ error: err.message });

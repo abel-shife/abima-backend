@@ -33,6 +33,7 @@ model Product {
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
   averageBuyPrice Decimal?
+  sellPrice       Decimal? // Maximum sell price for the product
   sales           Sale[]
   batches         StockBatch[]
   status          String       @default("active")

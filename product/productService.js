@@ -19,7 +19,7 @@ const getProductById = async (id) => {
 const createProduct = async (data) => {
     let productNumber;
     let exists = true;
-    // Ensure uniqueness
+    // Always generate a unique product number
     while (exists) {
         productNumber = generateProductNumber();
         exists = await prisma.product.findUnique({ where: { productNumber } });

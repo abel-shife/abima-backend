@@ -35,7 +35,12 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
     try {
         const { username, password, phone, role } = req.body;
-        const user = await userService.updateUser(req.params.id, { username, password, phone, role });
+        let updateData = { username, phone, role };
+        if (password) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            updateData.password = hashedPassword;
+        }
+        const user = await userService.updateUser(req.params.id, updateData);
         res.json(user);
     } catch (err) {
         res.status(400).json({ error: err.message });
