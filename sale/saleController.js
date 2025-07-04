@@ -136,6 +136,32 @@ const getSalesByCashierId = async (req, res) => {
     }
 };
 
+const getSalesByProductId = async (req, res) => {
+    try {
+        const { productId } = req.params;
+        if (!productId) {
+            return res.status(400).json({ error: 'productId param is required' });
+        }
+        const sales = await saleService.getSalesByProductId(productId);
+        res.json(sales);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+const getSalesByProductIdAndUserId = async (req, res) => {
+    try {
+        const { productId, userId } = req.params;
+        if (!productId || !userId) {
+            return res.status(400).json({ error: 'productId and userId params are required' });
+        }
+        const sales = await saleService.getSalesByProductIdAndUserId(productId, userId);
+        res.json(sales);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
 module.exports = {
     getAllSales,
     getSaleById,
@@ -143,4 +169,6 @@ module.exports = {
     updateSale,
     deleteSale,
     getSalesByCashierId,
+    getSalesByProductId,
+    getSalesByProductIdAndUserId,
 };

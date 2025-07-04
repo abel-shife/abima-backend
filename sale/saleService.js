@@ -99,6 +99,33 @@ const getSalesByCashierId = async (cashierId) => {
     });
 };
 
+const getSalesByProductId = async (productId) => {
+    return prisma.sale.findMany({
+        where: { soldProductId: parseInt(productId) },
+        include: {
+            Product: true,
+            StockBatch: true,
+            soldBy: true
+        },
+        orderBy: { soldAt: 'desc' }
+    });
+};
+
+const getSalesByProductIdAndUserId = async (productId, userId) => {
+    return prisma.sale.findMany({
+        where: {
+            soldProductId: parseInt(productId),
+            soldById: parseInt(userId)
+        },
+        include: {
+            Product: true,
+            StockBatch: true,
+            soldBy: true
+        },
+        orderBy: { soldAt: 'desc' }
+    });
+};
+
 module.exports = {
     getAllSales,
     getSaleById,
@@ -108,4 +135,6 @@ module.exports = {
     updateSale,
     deleteSale,
     getSalesByCashierId,
+    getSalesByProductId,
+    getSalesByProductIdAndUserId,
 };
